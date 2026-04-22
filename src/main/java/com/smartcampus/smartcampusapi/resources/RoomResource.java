@@ -24,22 +24,6 @@ public class RoomResource {
     @GET
     public Response getAllRooms() {
         List<Room> roomList = new ArrayList<>(DataStore.rooms.values());
-        for (Room room : roomList) {
-        if (room.getSensorIds() != null) {
-            for (String sensorId : room.getSensorIds()) {
-                if (!DataStore.sensors.containsKey(sensorId)) {
-                    ErrorMessage error = new ErrorMessage(
-                        "Sensor ID not found: " + sensorId,
-                        400,
-                        "BAD_REQUEST"
-                    );
-                    return Response.status(Response.Status.BAD_REQUEST)
-                            .entity(error)
-                            .build();
-                }
-            }
-        }
-    }
         return Response.ok(roomList).build();
     }
 
@@ -69,6 +53,13 @@ public class RoomResource {
         }
         if (room.getSensorIds() == null) {
             room.setSensorIds(new ArrayList<>());
+        }
+        for (String sensorId : room.getSensorIds()) {
+            if (!DataStore.sensors.containsKey(sensorId)) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(new ErrorMessage("Sensor ID not found: " + sensorId, 400, "BAD_REQUEST"))
+                        .build();
+            }
         }
         DataStore.rooms.put(room.getId(), room);
         return Response.status(Response.Status.CREATED)

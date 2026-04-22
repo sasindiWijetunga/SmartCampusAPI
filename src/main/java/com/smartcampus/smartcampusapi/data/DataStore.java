@@ -33,6 +33,20 @@ public class DataStore {
 
     // Empty reading lists
     readings.put(s1.getId(), new ArrayList<>());
+    
+     // Sample rooms
+    Room r2 = new Room("CLASS-302", "CLASSROOM ", 40);
+    rooms.put(r2.getId(), r2);
 
+    // Sample sensors
+    Sensor s2 = new Sensor("TEMP-002", "Temperature", "ACTIVE", 22.5, "CLASS-302");
+    sensors.put(s2.getId(), s2);
+
+    // Link sensors to rooms
+    r2.getSensorIds().add(s2.getId());
+
+    // Empty reading lists
+    readings.put(s2.getId(), new ArrayList<>());
+    
     }
 }
