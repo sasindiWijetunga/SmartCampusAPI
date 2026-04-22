@@ -6,6 +6,7 @@ package com.smartcampus.smartcampusapi.resources;
 
 import com.smartcampus.smartcampusapi.data.DataStore;
 import com.smartcampus.smartcampusapi.model.Room;
+import com.smartcampus.smartcampusapi.model.ErrorMessage;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,6 +24,22 @@ public class RoomResource {
     @GET
     public Response getAllRooms() {
         List<Room> roomList = new ArrayList<>(DataStore.rooms.values());
+        for (Room room : roomList) {
+        if (room.getSensorIds() != null) {
+            for (String sensorId : room.getSensorIds()) {
+                if (!DataStore.sensors.containsKey(sensorId)) {
+                    ErrorMessage error = new ErrorMessage(
+                        "Sensor ID not found: " + sensorId,
+                        400,
+                        "BAD_REQUEST"
+                    );
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity(error)
+                            .build();
+                }
+            }
+        }
+    }
         return Response.ok(roomList).build();
     }
 
