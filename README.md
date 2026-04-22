@@ -110,4 +110,42 @@ the POST method. Explain the technical consequences if a client attempts to send
 a different format, such as text/plain or application/xml. How does JAX-RS handle this
 mismatch?**
 
-**Answer -** 
+**Answer -** When a client sends data, but in text/plain or application/xml rather than application/json JAX-RS will automatically respond with a 415 Unsupported Media Type. This is due to the fact that the @Consumes(Mediatype.APPLICATION_JSON) annotation informs JAX-RS to accept only the requests whose Content-Type is application/json. When the Content-Type header is not JAX-RS rejects the request even before it has been meets our resource approach. This helps to ensure that the API does not get unexpected data in unforeseen formats that might lead to parsing errors.
+
+**Question 6 - You implemented this filtering using @QueryParam. Contrast this with an alternative
+design where the type is part of the URL path (e.g., /api/vl/sensors/type/CO2). Why
+is the query parameter approach generally considered superior for filtering and searching
+collections?**
+
+**Answer -** Filtering with query parameters is better than using path parameters since query parameters are optional and endsure the base URL is clean.For example:
+Base URL - /api/v1/sensors → returns all sensors
+With filter: /api/v1/sensors?type=CO2 → returns only CO2 sensors
+In case the type appeared in the URL path (e.g. /api/v1/sensors/type/CO2), it would be a distinct resource instead of a filter which is semantically incorrect in REST. The query parameters are also more adaptable since several filters can be easily combined:
+/api/v1/sensors?type=CO2&status=ACTIVE
+This maintains the URL clean and easy to maintain as opposed to the path parameters that would be making the URL structure vicious to manage with the addition of more filters.
+
+### Part 4 
+**Question 7 - Discuss the architectural benefits of the Sub-Resource Locator pattern. How
+does delegating logic to separate classes help manage complexity in large APIs compared
+to defining every nested path (e.g., sensors/{id}/readings/{rid}) in one massive controller
+class?**
+
+**Answer -** Sub-Resource Locator pattern enables complex APIs to be divided into small focused classes rather than having one huge controller class managing all the endpoint. A single responsibility exists in each of the classes and the code is simpler to understand and test. Dynamically SensorReadingResource is used as a reading logic but SensorResource is used as a sensor logic. Such isolation of issues brings a more organised and scalable codebase. Nested resources can be added by creating a new class and not by making changes to existing ones which can lead to the introduction of bugs.
+
+### Part 5
+**Question 8 - Why is HTTP 422 often considered more semantically accurate than a standard
+404 when the issue is a missing reference inside a valid JSON payload?**
+
+**Answer -** The 404 HTTP response indicates that the resource requested at the specified URL was not located. The meaning of HTTP 422 is that the request was grammatical, but unable to be processed because of semantic errors. In case a client POSTs a valid JSON sensor with a non-existent roomId the URL is valid and the JSON structure is valid. The issue is a broken reference in the payload. Therefore 422 Unprocessable Entity is more semantically accurate because it communicates that the request body contains a logical error rather than the endpoint not existing.
+
+**Question 9 - From a cybersecurity standpoint, explain the risks associated with exposing
+internal Java stack traces to external API consumers. What specific information could an
+attacker gather from such a trace?**
+
+**Answer -** The issue of exposing Java stack traces is a critical security threat because it exposes internal information, including class names, method names, line numbers and framework versions. This can be used by attackers to determine vulnerabilities and develop targeted attacks. To avoid this we intercept all unexpected errors with our GlobalExceptionMapper and send a generic 500 message.
+
+**Question 10 - Why is it advantageous to use JAX-RS filters for cross-cutting concerns like
+logging, rather than manually inserting Logger.info() statements inside every single resource
+method?**
+
+**Answer -** Logging with JAX-RS filters is preferable to inserting Logger.info() lines into each resource method. Using filters, the logging logic is specified at one point and is automatically used on each incoming request and outgoing response at the entire API. Manual logging involves the insertion of a code in each and every method resulting in the creation of duplicated code and complicates the maintenance of the API. When adding a new endpoint the developer should not forget to add logging manually, which is susceptible to errors. Filters embrace the DRY principle and enable logging behaviour to be modified at a single point without any business logic being touched.
