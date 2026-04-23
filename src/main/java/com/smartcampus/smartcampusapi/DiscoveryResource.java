@@ -23,7 +23,6 @@ public class DiscoveryResource {
         Map<String, Object> info = new HashMap<>();
 
         // Version info
-        info.put("version", "1.0");
         info.put("name", "Smart Campus API");
         info.put("description", "API for managing campus rooms and sensors");
         // Admin contact

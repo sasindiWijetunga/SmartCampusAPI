@@ -16,6 +16,7 @@ import java.util.Map;
  * @author sasin
  */
 public class DataStore {
+    // In-memory storage for rooms, sensors and readings
     public static Map<String, Room> rooms = new HashMap<>();
     public static Map<String, Sensor> sensors = new HashMap<>();
     public static Map<String, List<SensorReading>> readings = new HashMap<>();
@@ -39,7 +40,7 @@ public class DataStore {
     rooms.put(r2.getId(), r2);
 
     // Sample sensors
-    Sensor s2 = new Sensor("TEMP-002", "Temperature", "ACTIVE", 22.5, "CLASS-302");
+    Sensor s2 = new Sensor("HUM-001", "Humidity", "ACTIVE", 60.0, "CLASS-302");
     sensors.put(s2.getId(), s2);
 
     // Link sensors to rooms

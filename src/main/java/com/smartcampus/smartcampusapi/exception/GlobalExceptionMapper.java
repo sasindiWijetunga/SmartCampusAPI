@@ -17,6 +17,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
 
     @Override
     public Response toResponse(Throwable exception) {
+        // Return a generic error message without exposing internal details
         ErrorMessage errorMessage = new ErrorMessage(
                 "An unexpected internal server error occurred.",
                 500,

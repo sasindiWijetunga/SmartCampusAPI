@@ -7,7 +7,6 @@ com\smartcampus\smartcampusapi\data\DataStore.class
 com\smartcampus\smartcampusapi\exception\RoomNotEmptyExceptionMapper.class
 com\smartcampus\smartcampusapi\exception\GlobalExceptionMapper.class
 com\smartcampus\smartcampusapi\DiscoveryResource.class
-com\smartcampus\smartcampusapi\JakartaRestConfiguration.class
 com\smartcampus\smartcampusapi\model\ErrorMessage.class
 com\smartcampus\smartcampusapi\model\Sensor.class
 com\smartcampus\smartcampusapi\exception\SensorUnavailableException.class
@@ -15,6 +14,5 @@ com\smartcampus\smartcampusapi\model\Room.class
 com\smartcampus\smartcampusapi\ApplicationConfig.class
 com\smartcampus\smartcampusapi\filter\LoggingFilter.class
 com\smartcampus\smartcampusapi\resources\SensorResource.class
-com\smartcampus\smartcampusapi\resources\JakartaEE8Resource.class
 com\smartcampus\smartcampusapi\resources\RoomResource.class
 com\smartcampus\smartcampusapi\exception\LinkedResourceNotFoundException.class

@@ -16,12 +16,15 @@ public class Room {
     private int capacity; 
     private List <String > sensorIds = new ArrayList <>();
     
+    //Constructors
     public Room(){}
     public Room(String id, String name,int capacity){
         this.id = id;
         this.name = name;
         this.capacity = capacity;
     }
+    
+    //Getters
     public String getId(){
         return id;
     }
@@ -34,6 +37,8 @@ public class Room {
     public List<String> getSensorIds(){
         return sensorIds;
     }
+    
+    //Setters
     public void setId(String id){
         this.id = id;
     }

@@ -13,6 +13,7 @@ public class ErrorMessage {
     private int errorCode;
     private String documentation;
     
+    //Constructors
     public ErrorMessage() {
         
     }
@@ -22,7 +23,7 @@ public class ErrorMessage {
         this.errorCode = errorCode;
         this.documentation = error;
     }
-    
+    //Getters
     public String getErrorMessage() {
         return errorMessage;
     }
@@ -35,6 +36,7 @@ public class ErrorMessage {
         return documentation;
     }
     
+    //Setters
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }

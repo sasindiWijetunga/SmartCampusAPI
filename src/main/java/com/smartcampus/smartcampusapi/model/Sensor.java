@@ -15,6 +15,7 @@ public class Sensor {
     private double currentValue;
     private String roomId;
     
+    //constructor
     public Sensor(){}
     public Sensor(String id, String type,String status,double currentValue,String roomId){
         this.id = id;
@@ -23,6 +24,8 @@ public class Sensor {
         this.currentValue = currentValue;
         this.roomId = roomId;
     }
+    
+    //Getters
     public String getId(){
         return id;
     }
@@ -38,6 +41,8 @@ public class Sensor {
     public String getRoomId(){
         return roomId;
     }
+    
+    //Setters
     public void setId(String id){
         this.id = id;
     }

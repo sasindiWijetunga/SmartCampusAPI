@@ -8,7 +8,6 @@ C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\model\SensorReading.java
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\model\Sensor.java
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\exception\RoomNotEmptyExceptionMapper.java
-C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\resources\JakartaEE8Resource.java
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\exception\GlobalExceptionMapper.java
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\exception\LinkedResourceNotFoundExceptionMapper.java
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\model\Room.java
@@ -17,4 +16,3 @@ C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\resources\SensorResource.java
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\data\DataStore.java
 C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\exception\LinkedResourceNotFoundException.java
-C:\Users\sasin\OneDrive\Documents\NetBeansProjects\SmartCampusAPI\src\main\java\com\smartcampus\smartcampusapi\JakartaRestConfiguration.java

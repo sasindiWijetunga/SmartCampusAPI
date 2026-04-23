@@ -21,36 +21,42 @@ import com.smartcampus.smartcampusapi.exception.RoomNotEmptyException;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RoomResource {
+    //Returns all rooms in the system
     @GET
     public Response getAllRooms() {
         List<Room> roomList = new ArrayList<>(DataStore.rooms.values());
         return Response.ok(roomList).build();
     }
 
-
+    //Returns a specific room by ID
     @GET
     @Path("/{roomId}")
     public Response getRoom(@PathParam("roomId") String roomId) {
         Room room = DataStore.rooms.get(roomId);
         if (room == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("error:Room not found" + roomId)
+                    .entity(new ErrorMessage("Room not found" + roomId,404,"NOT_FOUND"))
                     .build();
         }
         return Response.ok(room).build();
     }
+    
+    //Creates a new room
     @POST
     public Response createRoom(Room room) {
+        //Validate room Id 
         if (room == null ||room.getId() == null || room.getId().trim().isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("error:Room ID is required")
+                    .entity(new ErrorMessage("Room ID is required",400,"BAD_REQUEST"))
                     .build();
         }
+        //Check room does not already exist
         if (DataStore.rooms.containsKey(room.getId())) {
             return Response.status(Response.Status.CONFLICT)
-                    .entity("error:Room already exists")
+                    .entity(new ErrorMessage("Room already exists",409,"CONFLICT"))
                     .build();
         }
+        //Check sensor list if null
         if (room.getSensorIds() == null) {
             room.setSensorIds(new ArrayList<>());
         }
@@ -66,19 +72,23 @@ public class RoomResource {
                 .entity(room)
                 .build();
     }
+    
+    //DELETE a room 
     @DELETE
     @Path("/{roomId}")
     public Response deleteRoom(@PathParam("roomId") String roomId) {
         Room room = DataStore.rooms.get(roomId);
+        // Check room exists
         if (room == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("error:Room not found")
+                    .entity(new ErrorMessage("Room not found" + roomId,404,"NOT_FOUND"))
                     .build();
         }
+        // Cannot delete room if sensors are still assigned
         if (!room.getSensorIds().isEmpty()) {
             throw new RoomNotEmptyException("Room cannot be deleted because it still has sensors assigned.");
         }
         DataStore.rooms.remove(roomId);
-        return Response.ok("message:Room deleted successfully").build();
+        return Response.ok(new ErrorMessage("Room deleted successfully", 200, "OK")).build();
     }
 }

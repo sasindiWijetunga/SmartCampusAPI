@@ -19,14 +19,14 @@ import java.util.logging.Logger;
 public class LoggingFilter implements ContainerRequestFilter,ContainerResponseFilter{
 
     private static final Logger LOGGER = Logger.getLogger(LoggingFilter.class.getName());
-
+    //Logs the HTTP method and URI of every incoming request.
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         LOGGER.info("--- Incoming Request ---");
         LOGGER.info("Method: " + requestContext.getMethod());
         LOGGER.info("URI: " + requestContext.getUriInfo().getAbsolutePath());
     }
-
+    //Logs the HTTP status code of every outgoing response.
     @Override
     public void filter(ContainerRequestContext requestContext, 
                        ContainerResponseContext responseContext) throws IOException {

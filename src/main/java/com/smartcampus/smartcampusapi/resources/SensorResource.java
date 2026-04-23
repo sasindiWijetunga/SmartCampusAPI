@@ -7,6 +7,7 @@ package com.smartcampus.smartcampusapi.resources;
 import com.smartcampus.smartcampusapi.data.DataStore;
 import com.smartcampus.smartcampusapi.model.Room;
 import com.smartcampus.smartcampusapi.model.Sensor;
+import com.smartcampus.smartcampusapi.model.ErrorMessage;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,6 +22,7 @@ import com.smartcampus.smartcampusapi.exception.LinkedResourceNotFoundException;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class SensorResource {
+    //Returns all sensors
     @GET
     public Response getAllSensors(@QueryParam("type") String type) {
         List<Sensor> sensorList = new ArrayList<>(DataStore.sensors.values());
@@ -44,30 +46,34 @@ public class SensorResource {
         Sensor sensor = DataStore.sensors.get(sensorId);
         if (sensor == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("error:Sensor not found")
+                    .entity(new ErrorMessage("Sensor not found " + sensorId, 404, "NOT_FOUND"))
                     .build();
         }
         return Response.ok(sensor).build();
     }
 
-    
+    //Creates a new sensor
     @POST
     public Response createSensor(Sensor sensor) {
+        //Validate sensor ID
         if (sensor.getId() == null || sensor.getId().trim().isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("error:Sensor ID is required")
+                    .entity(new ErrorMessage("Sensor ID is required", 400, "BAD_REQUEST"))
                     .build();
         }
+        //Validate room Id 
         if (sensor.getRoomId() == null || sensor.getRoomId().trim().isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("error:Room ID is required")
+                    .entity(new ErrorMessage("Room ID is required", 400, "BAD_REQUEST"))
                     .build();
         }
+        // Check sensor does not already exist
         if (DataStore.sensors.containsKey(sensor.getId())) {
             return Response.status(Response.Status.CONFLICT)
-                    .entity("error:Sensor with this ID already exists")
+                    .entity(new ErrorMessage("Sensor with this ID already exists", 409, "CONFLICT"))
                     .build();
         }
+        // Verify the referenced room actually exists
         Room room = DataStore.rooms.get(sensor.getRoomId());
         if (room == null) {
             throw new LinkedResourceNotFoundException("Referenced room does not exist.");
